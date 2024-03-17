@@ -1,0 +1,61 @@
+.signup-body {
+    background-image: url("https://images.pexels.com/photos/956999/milky-way-starry-sky-night-sky-star-956999.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+  
+  .signup-container {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    max-width: 800px;
+    border: 2px solid #FF004D;
+    border-radius: 20px;
+  }
+  #mainform{
+    min-width: 800px;
+    /* min-height: 500px; */
+  }
+  
+  .signup-container h2 {
+    color: #333;
+  }
+  
+  .signup-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .signup-container input {
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 1em;
+  }
+  
+  .signup-container label {
+    display: flex;
+    align-items: center;
+  }
+  
+  .signup-container button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .signup-container button:hover {
+    background-color: #555;
+  }
+  
+  .login-link {
+    font-size: 1em;
+    color: #555;
+  }
+  

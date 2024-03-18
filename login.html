@@ -30,6 +30,12 @@
        <input type="text" required> <i>Username</i> 
 
       </div> 
+      
+      <div class="inputBox"> 
+
+        <input type="text" required> <i>Email</i> 
+ 
+       </div> 
 
       <div class="inputBox"> 
 
@@ -54,6 +60,30 @@
    </div> 
 
   </section> <!-- partial --> 
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCpFl0lAVKcKrg5gCzlz2RuQ3zt7xCY_dc",
+      authDomain: "student-performance-pred-f6c38.firebaseapp.com",
+      projectId: "student-performance-pred-f6c38",
+      storageBucket: "student-performance-pred-f6c38.appspot.com",
+      messagingSenderId: "563801963757",
+      appId: "1:563801963757:web:e96ecb591d2820986160e4",
+      measurementId: "G-6Z11YCS39Q"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
 
  </body>
 

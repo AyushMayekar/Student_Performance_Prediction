@@ -1,70 +1,180 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="dashboard.css">
-</head>
+<!doctype html>
 
-<body>
-    <section>
-        <div class="dashboard">
-            <div class="content">
-                <h2>Welcome to Your Dashboard</h2>
-                <p>This is a sample dashboard page. You can customize it according to your needs.</p>
-                <div class="actions">
-                    <a href="#">Action 1</a>
-                    <a href="#">Action 2</a>
-                    <a href="#">Action 3</a>
-                    <a href="#">Action 4</a>
-                </div>
-                <div class="logout">
-                    <a href="#" id="logoutButton">Logout</a>
-                </div>
-            </div>
-        </div>
-    </section>
+<html lang="en"> 
 
-    <!-- <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-        import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+ <head> 
 
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID",
-            measurementId: "YOUR_MEASUREMENT_ID"
-        };
+  <meta charset="UTF-8"> 
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth();
+  <title>Questions</title> 
 
-        // Function to handle logout
-        const logoutButton = document.getElementById('logoutButton');
-        logoutButton.addEventListener('click', async function(event) {
-            event.preventDefault(); // Prevent the default link behavior
+  <link rel="stylesheet" href="dash.css"> 
 
-            try {
-                await signOut(auth);
-                console.log('User logged out successfully');
-                alert('Logout successful! Redirecting to login page...');
-                window.location.href = "login.html"; // Redirect to the login page after logout
-            } catch (error) {
-                console.error('Logout error:', error.message);
-                alert('Error: ' + error.message);
-            }
-        });
-    </script> -->
-</body>
+ </head> 
 
-</html>
+ <body> <!-- partial:index.partial.html --> 
+
+  <section> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> 
+
+   <div class="signin"> 
+
+    <div class="content"> 
+
+     <h2>Q.2] how much is your study hours ?</h2> 
+
+     <div class="form"> 
+
+      <div class="inputBox"> 
+
+       <input type="number"  id ="username" required> <i>( enter in nearest integer )</i> 
+
+      </div> 
+
+    </div> 
+
+   </div> 
+
+</div>
+
+<!-- Q.2 -->
+
+<div class="signin1"> 
+
+    <div class="content1"> 
+
+     <h2>Q.1] what is your learning style ? </h2>   
+     <!-- <label> Short Description on learning style </label> --> 
+
+     <div class="form1"> 
+
+      <div class="inputBox1"> 
+
+        <input list="study">
+     <datalist id="study">
+        
+      <option value="Visual learner"> (learn best through pictures , graph diagram)</option>
+      <option value="Auditory learners"> (learn best through listening lectures and explanations)</option>
+      <option value="kinesthetic learners"> (learn best through physical activities)</option>
+      <option value="Read/Write learners"> (learn best through by reading or writing notes)</option>
+      <option value="Logic learners"> (learn best through patterns,logic and problem solving)</option>
+      <option value="Social learners">(learn best through interaction and collabrations )</option>
+      <option value="Solitary learners"> (prefer to learn alone,focusing on own pace and interest )</option>
+
+     </datalist>   
+      </div> 
+
+    
+    </div> 
+
+   </div> 
+
+</div>
+<!-- Q2 -->
+
+<!-- Q5 -->
+<div class="signin4"> 
+
+  <div class="content4"> 
+
+   <h2>Q.3] How much is your screen time ?</h2> 
+
+   <div class="form4"> 
+
+    <div class="inputBox4"> 
+
+     <input type="number"  id ="username" required> <i>( enter in nearest integer )</i> 
+
+    </div> 
+
+  </div> 
+
+ </div> 
+
+</div>
+<!-- Q5 -->
+
+<!-- Q6 -->
+<div class="signin5"> 
+
+  <div class="content5"> 
+
+   <h2>Q.4] how much is your sleeping hours ?</h2> 
+
+   <div class="form5"> 
+
+    <div class="inputBox5"> 
+
+     <input type="number"  id ="username" required> <i>( enter in nearest integer )</i> 
+
+    </div> 
+
+  </div> 
+
+ </div> 
+
+</div>
+<!-- Q6 -->
+<!-- Q3 -->
+<div class="signin2"> 
+
+  <div class="content2"> 
+
+   <h2>Q.5] what is your current engineering semester ?</h2> 
+
+   <div class="form2"> 
+
+    <div class="inputBox2"> 
+      <input list="study1">
+      <datalist name="study1" id="study1" onchange="populate(this.id,'study2')">
+         
+       <option value="1">First Semester</option>
+       <option value="2">Second Semester</option>
+       <option value="3">Third Semester</option>
+       <option value="4">Forth Semester</option>
+       <option value="5">Fifth Semester</option>
+       <option value="6">Sixth Semester</option>
+       <option value="7">Seventh Semester</option>
+       <option value="8">Eighth Semester</option>
+
+      </datalist>   
+    </div> 
+
+  </div> 
+
+ </div> 
+
+</div>
+<!-- Q3 -->
+
+<!-- Q4 -->
+<div class="signin3"> 
+
+  <div class="content3"> 
+
+   <h2>Q.6] Do you currently have any previous semester kt's? </h2>   
+   
+
+   <div class="form3"> 
+
+    <div class="inputBox3"> 
+
+      <input list="study2">
+   <datalist id="study2">
+      
+    <option value="Yes">i have current kt's from previous semesters</option>
+    <option value="No"> i dont have any current kt's from previous semesters</option>
+   
+
+   </datalist>   
+    </div>  
+
+  
+  </div> 
+
+ </div> 
+
+</div>
+<!-- Q4 -->
+  </section>
+  

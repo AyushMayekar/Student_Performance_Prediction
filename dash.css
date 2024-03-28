@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-
-
 *
 {
   margin: 0;
@@ -791,5 +789,47 @@ input[type="submit"]:active
     height: calc(20vw - 2px);
   }
 }
+
+/* Example CSS for styling the slider */
+input[type="range"] {
+  width: 100%; /* Adjust width as needed */
+  /* -webkit-appearance: none; Remove default styling */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Remove default styling */
+  width: 20px; /* Set thumb width */
+  height: 20px; /* Set thumb height */
+  background-color: #333; /* Set thumb color */
+  border-radius: 50%; /* Round the thumb */
+  cursor: pointer; /* Show pointer cursor */
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%; /* Set track width */
+  height: 6px; /* Set track height */
+  background-color: #ccc; /* Set track color */
+  border-radius: 3px; /* Round the track */
+}
+
+.submit-btn {
+  text-align: center;
+  margin-top: 20px; /* Adjust as needed */
+}
+
+.submit-btn button {
+  background-color: green;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-btn button:hover {
+  background-color: darkgreen;
+}
+
+
 
 /* sixth question ends */

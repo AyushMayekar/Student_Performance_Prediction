@@ -27,8 +27,10 @@
 
       <div class="inputBox"> 
 
-       <input type="number"  id ="username" required> <i>( enter in nearest integer )</i> 
+       <input type="range"  id ="study-hours" min="0" max="24" step="1" required> <i>(Slide to select hours, range: 0-24)</i> 
 
+       <span id="study-hours-value">0<span> hours
+        
       </div> 
 
     </div> 
@@ -36,6 +38,9 @@
    </div> 
 
 </div>
+
+
+  
 
 <!-- Q.2 -->
 
@@ -50,8 +55,8 @@
 
       <div class="inputBox1"> 
 
-        <input list="study">
-     <datalist id="study">
+        <input type="text" list="learning-styles" id="learning-style" required>
+     <datalist id="learning-styles">
         
       <option value="Visual learner"> (learn best through pictures , graph diagram)</option>
       <option value="Auditory learners"> (learn best through listening lectures and explanations)</option>
@@ -83,8 +88,9 @@
 
     <div class="inputBox4"> 
 
-     <input type="number"  id ="username" required> <i>( enter in nearest integer )</i> 
+     <input type="range"  id ="screen-time" min="0" max="24" step="1" required> <i>( Slide to select hours ,range:0-24 )</i> 
 
+     <span id="screen-time-value">0<span> hours
     </div> 
 
   </div> 
@@ -105,7 +111,9 @@
 
     <div class="inputBox5"> 
 
-     <input type="number"  id ="username" required> <i>( enter in nearest integer )</i> 
+     <input type="range"  id ="sleep-hours" min="0" max="24" step="1" required> <i>( Slide to select hours, range: 0-24 )</i> 
+
+     <span id="sleep-hours-value">0<span> hours
 
     </div> 
 
@@ -125,8 +133,8 @@
    <div class="form2"> 
 
     <div class="inputBox2"> 
-      <input list="study1">
-      <datalist name="study1" id="study1" onchange="populate(this.id,'study2')">
+      <input list="study1" id="current-sem">
+      <datalist id="study1">
          
        <option value="1">First Semester</option>
        <option value="2">Second Semester</option>
@@ -158,15 +166,15 @@
    <div class="form3"> 
 
     <div class="inputBox3"> 
-
-      <input list="study2">
-   <datalist id="study2">
-      
-    <option value="Yes">i have current kt's from previous semesters</option>
-    <option value="No"> i dont have any current kt's from previous semesters</option>
-   
-
-   </datalist>   
+      <label>
+      <input type="checkbox" class="prev-kt" id="prev-kt-yes" value="Yes">
+      Yes, I have current kt's from previous semesters
+    </label>
+    <br>
+    <label>
+      <input type="checkbox" class="prev-kt" id="prev-kt-no" value="No">
+      No, I don't have any current kt's from previous semesters
+    </label>
     </div>  
 
   
@@ -175,6 +183,138 @@
  </div> 
 
 </div>
+
+<div class = "submit-btn">
+  <button id="submit-all">Submit All Answers</button>
+</div>
 <!-- Q4 -->
   </section>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+    // import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+    
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCpFl0lAVKcKrg5gCzlz2RuQ3zt7xCY_dc",
+      authDomain: "student-performance-pred-f6c38.firebaseapp.com",
+      projectId: "student-performance-pred-f6c38",
+      storageBucket: "student-performance-pred-f6c38.appspot.com",
+      messagingSenderId: "563801963757",
+      appId: "1:563801963757:web:e96ecb591d2820986160e4",
+      measurementId: "G-6Z11YCS39Q"
+    };
+  
+
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    // const auth = getAuth();
+    const db = getFirestore(app);
+
+
+    const submitForm = async () => {
+        const studyHours = document.getElementById('study-hours').value;
+        const learningStyle = document.getElementById('learning-style').value;
+        const screenTime = document.getElementById('screen-time').value;
+        const sleepingHours = document.getElementById('sleep-hours').value;
+        const semester = document.getElementById('current-sem').value;
+        const previousKtsYes = document.getElementById('prev-kt-yes').checked;
+        const previousKtsNo = document.getElementById('prev-kt-no').checked;
+        let previouskts='';
+         if (previousKtsYes) { 
+            previouskts= 'Yes';
+          } else if (previousKtsNo){
+             previouskts= 'No';
+           }else {
+        // Handle case where neither checkbox is checked
+        alert('Please select whether you have previous semester kt\'s');
+        return;
+     };
+
+       
+    // Function to handle signup form submission
+    // const signupForm = document.getElementById('signupForm');
+    // signupForm.addEventListener('submit', async function(event) {
+    //   event.preventDefault(); // Prevent the default form submission
+
+    // Get user input values
+   
+
+      try {
+           
+
+            await addDoc(collection(db, "users"), {
+                studyHours: studyHours,
+                learningStyle: learningStyle,
+                screenTime: screenTime,
+                sleepingHours: sleepingHours,
+                semester: semester,
+                previousKts: previousKts
+            });
+           // Optionally, redirect to another page after submission
+                // window.location.href = "success.html";
+                alert('Form submitted successfully!');
+        } catch (error) {
+            console.error('User input error:', error.message);
+            alert('Error: ' + error.message);
+        }
+    };
+
+      // Add an event listener to update the slider value display
+  const ScreenTimeSlider = document.getElementById('screen-time');
+  const ScreenTimeValue = document.getElementById('screen-time-value');
+  const SleepHourSlider = document.getElementById('sleep-hours');
+  const SleepHourValue = document.getElementById('sleep-hours-value');
+  const studyHoursSlider = document.getElementById('study-hours');
+  const studyHoursValue = document.getElementById('study-hours-value');
+
+ SleepHourSlider.addEventListener('change', function() {
+    // Update the value display
+    
+    SleepHourValue.textContent = this.value;
+  
+  });
+
+  ScreenTimeSlider.addEventListener('change', function() {
+    // Update the value display
+    
+    ScreenTimeValue.textContent = this.value;
+  });
+
+  studyHoursSlider.addEventListener('change', function() {
+    // Update the value display
+    studyHoursValue.textContent = this.value;
+   
+  });
+
+
+  
+  // Add event listeners to checkboxes to ensure only one can be selected
+  const prevKtCheckboxes = document.querySelectorAll('.prev-kt');
+  prevKtCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      if (this.checked) {
+        prevKtCheckboxes.forEach(otherCheckbox => {
+          if (otherCheckbox !== this) {
+            otherCheckbox.checked = false;
+          }
+        });
+      }
+    });
+  });
+
+
+    document.getElementById('submit-all').addEventListener('click', submitForm);
+ </script>
+</body>
+    </html>
   

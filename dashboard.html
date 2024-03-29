@@ -27,9 +27,14 @@
 
       <div class="inputBox"> 
 
-       <input type="range"  id ="study-hours" min="0" max="24" step="1" required> <i>(Slide to select hours, range: 0-24)</i> 
+       <input type="range" id ="study-hours" min="0" max="24" step="1" required> <i style="top:-30px; color:#0f0; font-size:20px">(Slide to select hours, Range: 0-24 )</i> 
 
-       <span id="study-hours-value">0<span> hours
+       <span style="background-color:chartreuse;
+       border: 1px solid white;
+       width:10%;
+       height:50%
+        " 
+       id="study-hours-value">0 hours</span>
         
       </div> 
 
@@ -88,9 +93,13 @@
 
     <div class="inputBox4"> 
 
-     <input type="range"  id ="screen-time" min="0" max="24" step="1" required> <i>( Slide to select hours ,range:0-24 )</i> 
+     <input type="range"  id ="screen-time" min="0" max="24" step="1" required> <i style="top:-30px; color:#0f0; font-size:20px">( Slide to select hours, Range: 0-24 )</i> 
 
-     <span id="screen-time-value">0<span> hours
+     <span style="background-color:chartreuse;
+     border: 1px solid white;
+     width:10%;
+     height:50%
+      " id="screen-time-value">0 hours</span>
     </div> 
 
   </div> 
@@ -111,9 +120,15 @@
 
     <div class="inputBox5"> 
 
-     <input type="range"  id ="sleep-hours" min="0" max="24" step="1" required> <i>( Slide to select hours, range: 0-24 )</i> 
+     <input type="range"  id ="sleep-hours" min="0" max="24" step="1" required> <i style=" color:#0f0; font-size:20px">( Slide to select hours, Range: 0-24 )</i> 
 
-     <span id="sleep-hours-value">0<span> hours
+     <span style="background-color:chartreuse;
+     border: 1px solid white;
+     width:10%;
+     height:50%;
+     top:-90px;
+     
+    " id="sleep-hours-value">0 hours</span>
 
     </div> 
 
@@ -166,12 +181,12 @@
    <div class="form3"> 
 
     <div class="inputBox3"> 
-      <label>
+      <label style="color: #0f0; font-size:25px;">
       <input type="checkbox" class="prev-kt" id="prev-kt-yes" value="Yes">
       Yes, I have current kt's from previous semesters
     </label>
     <br>
-    <label>
+    <label style="color: #0f0; font-size:25px; ">
       <input type="checkbox" class="prev-kt" id="prev-kt-no" value="No">
       No, I don't have any current kt's from previous semesters
     </label>
@@ -184,17 +199,37 @@
 
 </div>
 
-<div class = "submit-btn">
-  <button id="submit-all">Submit All Answers</button>
-</div>
+<!-- submit button -->
+
+<div class="signin7"> -
+
+  <div class="content7"> 
+
+   <div class="form7"> 
+
+    <div class="inputBox7"> 
+       
+      <a href="">
+     <input type="submit" value="SUBMIT" id="submit-button"> 
+    </a>
+    
+    </div> 
+
+   </div> 
+
+  </div> 
+
+ </div> 
+
+ <!-- submit button -->
 <!-- Q4 -->
   </section>
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-    // import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+    import { getFirestore, collection, setDoc,doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
     
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -217,11 +252,17 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
-    // const auth = getAuth();
+    const auth = getAuth();
     const db = getFirestore(app);
-
-
+   
     const submitForm = async () => {
+       event.preventDefault();
+       const user = auth.currentUser;
+
+        if (!user) {
+            console.log("No user signed in");
+            return;
+        }
         const studyHours = document.getElementById('study-hours').value;
         const learningStyle = document.getElementById('learning-style').value;
         const screenTime = document.getElementById('screen-time').value;
@@ -230,11 +271,11 @@
         const previousKtsYes = document.getElementById('prev-kt-yes').checked;
         const previousKtsNo = document.getElementById('prev-kt-no').checked;
         let previouskts='';
-         if (previousKtsYes) { 
+        if (previousKtsYes) { 
             previouskts= 'Yes';
-          } else if (previousKtsNo){
-             previouskts= 'No';
-           }else {
+        } else if (previousKtsNo){
+            previouskts= 'No';
+        }else {
         // Handle case where neither checkbox is checked
         alert('Please select whether you have previous semester kt\'s');
         return;
@@ -251,14 +292,14 @@
 
       try {
            
-
-            await addDoc(collection(db, "users"), {
+            const userDocRef = doc(db, 'users', user.uid);
+            await updateDoc(userDocRef, {
                 studyHours: studyHours,
                 learningStyle: learningStyle,
                 screenTime: screenTime,
                 sleepingHours: sleepingHours,
                 semester: semester,
-                previousKts: previousKts
+                previousKts: previouskts
             });
            // Optionally, redirect to another page after submission
                 // window.location.href = "success.html";
@@ -313,7 +354,23 @@
   });
 
 
-    document.getElementById('submit-all').addEventListener('click', submitForm);
+   
+  onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in, get the user ID
+                const userId = user.uid;
+
+                // Add event listener to submit button
+                document.getElementById('submit-button').addEventListener('click', () => {
+                    // Call function to submit form with user ID
+                    submitForm();
+                });
+            } else {
+                // No user is signed in
+                console.log("No user signed in");
+            }
+        });
+
  </script>
 </body>
     </html>

@@ -279,7 +279,10 @@
         // Handle case where neither checkbox is checked
         alert('Please select whether you have previous semester kt\'s');
         return;
-     };
+      }
+
+    
+     
 
        
     // Function to handle signup form submission
@@ -301,13 +304,21 @@
                 semester: semester,
                 previousKts: previouskts
             });
+            if (previouskts === 'Yes') {
+        window.location.href = "kt.html";
+    } else {
+        // Continue with form submission or any other action
+        // You can add your form submission logic here
+    
            // Optionally, redirect to another page after submission
                 // window.location.href = "success.html";
                 alert('Form submitted successfully!');
+    }
         } catch (error) {
             console.error('User input error:', error.message);
             alert('Error: ' + error.message);
         }
+        
     };
 
       // Add an event listener to update the slider value display

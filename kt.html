@@ -166,6 +166,7 @@
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
     import { getFirestore, collection, setDoc,doc, updateDoc,getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+    import { getFirestore, collection, setDoc,doc, updateDoc,getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
     
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -190,6 +191,54 @@
     const analytics = getAnalytics(app);
     const auth = getAuth();
     const db = getFirestore(app);
+
+      // Function to show only valid semester cards based on current semester
+      const showValidSemesterCards = async () => {
+        const user = auth.currentUser;
+
+        if (!user) {
+            console.log("No user signed in");
+            return;
+        }
+
+        try {
+            // Get the current semester from Firestore
+            const userDocRef = doc(db, 'users', user.uid);
+            const userDocSnap = await getDoc(userDocRef);
+
+            if (userDocSnap.exists()) {
+                const userData = userDocSnap.data();
+                const currentSemester = userData.semester;
+
+                // Hide all semester cards
+                for (let i = 1; i <= 8; i++) {
+                    document.querySelector(`.signin${i}`).style.display = "none";
+                }
+
+                // Show valid semester cards based on current semester
+                if (currentSemester > 4) {
+            let i;
+            if (currentSemester % 2 === 0) {
+                i = currentSemester - 3;
+            } else {
+                i = currentSemester - 2;
+            }
+            for (; i < currentSemester; i++) {
+                document.querySelector(`.signin${i}`).style.display = "block";
+            }
+        } else {
+            // If current semester is 4 or less, iterate from 1 to current semester
+            for (let i = 1; i < currentSemester; i++) {
+                document.querySelector(`.signin${i}`).style.display = "block";
+            }
+        }
+    } else {
+        console.log("User document does not exist");
+    }
+} catch (error) {
+    console.error('Error retrieving user data:', error.message);
+}
+    };
 
       // Function to show only valid semester cards based on current semester
       const showValidSemesterCards = async () => {

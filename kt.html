@@ -166,7 +166,7 @@
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
     import { getFirestore, collection, setDoc,doc, updateDoc,getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
-    import { getFirestore, collection, setDoc,doc, updateDoc,getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+    // import { getFirestore, collection, setDoc,doc, updateDoc,getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
     
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -193,9 +193,9 @@
     const db = getFirestore(app);
 
       // Function to show only valid semester cards based on current semester
-      const showValidSemesterCards = async () => {
+     const showValidSemesterCards = async () => {
         const user = auth.currentUser;
-
+        
         if (!user) {
             console.log("No user signed in");
             return;

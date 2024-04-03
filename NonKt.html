@@ -260,9 +260,8 @@
             return;
         }
 
-        // const userId = user.uid;
-                // console.log('User ID',userId)
-        // sendUserIdToBackend(userId);
+        const userId = user.uid;
+        sendUserIdToBackend(userId);
 
           // Array to store cgpa's
     const cgpastored = [];
@@ -293,6 +292,26 @@ for (let i = 1; i <= 7; i++) {
         } catch (error) {
             console.error('User input error:', error.message);
             alert('Error: ' + error.message);
+        }
+    };
+
+    const sendUserIdToBackend = async (userId) => {
+        try {
+            const response = await fetch('http://127.0.0.1:5000/cgpa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId }),
+            });
+
+            if (response.ok) {
+                console.log('User ID sent to backend successfully');
+            } else {
+                console.error('Failed to send user ID to backend');
+            }
+        } catch (error) {
+            console.error('Error sending user ID to backend:', error);
         }
     };
 

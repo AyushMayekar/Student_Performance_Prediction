@@ -43,6 +43,26 @@ def get_selected_subjects(user_id):
         print(f"Error retrieving selected subjects: {e}")
         return []
 
+def get_selected_Cgpa(user_id):
+    try:
+        user_ref = db.collection('users').document(user_id)
+        user_doc = user_ref.get()
+
+        if user_doc.exists:
+            selected_cgpa = user_doc.get('Cgpa')
+            if selected_cgpa:
+                selected_cgpa_list = [cgpa for cgpa in selected_cgpa]
+                return selected_cgpa_list
+            else:
+                return []
+        else:
+            print(f"User document with ID {user_id} does not exist.")
+            return []
+    except Exception as e:
+        print(f"Error retrieving cgpa: {e}")
+        return []
+    
+
 # Route to handle user requests
 @app.route('/user', methods=['POST'])
 def receive_user_id():
@@ -75,6 +95,39 @@ def generate_output(selected_subjects_list):
     except Exception as e:
         error_message = f"Error generating response: {e}"
         return error_message
+
+
+@app.route('/cgpa', methods=['POST'])
+def receive_user_id_cgpa():
+    try:
+        user_id = request.json.get('userId')
+        if user_id:
+            output = get_selected_Cgpa(user_id)
+            if output is not None:
+                cgpa = generate_output_cgpa(output)
+                if cgpa is not None:
+                    print(cgpa)
+                    return jsonify({'cgpa': cgpa}), 200
+                else:
+                    return 'Error in generating LLM response', 200
+            else:
+                return 'User data not found', 404
+        else:
+            return 'User ID not provided', 400
+    except Exception as e:
+        print('Error:', e)
+        return 'Internal Server Error', 
+# Function to generate response using GenerativeAI model
+def generate_output_cgpa(selected_cgpa_list):
+    try:
+        model = genai.GenerativeModel("gemini-pro")
+        prompt_2 = f"""just display cgpa:{selected_cgpa_list}."""  
+        response_2 = model.generate_content(prompt_2)
+        return response_2.text
+    except Exception as e:
+        error_message = f"Error generating response: {e}"
+        return error_message
+    
 
 # Start Flask app
 if __name__ == '__main__':

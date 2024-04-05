@@ -6,6 +6,10 @@ import os
 from dotenv import load_dotenv
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
 
 app = Flask(__name__)
 CORS(app)
@@ -51,7 +55,7 @@ def get_selected_Cgpa(user_id):
         if user_doc.exists:
             selected_cgpa = user_doc.get('Cgpa')
             if selected_cgpa:
-                selected_cgpa_list = [cgpa for cgpa in selected_cgpa]
+                selected_cgpa_list = [float(item['cgpa']) for item in selected_cgpa if item.get('cgpa') != ''] 
                 return selected_cgpa_list
             else:
                 return []
@@ -62,6 +66,20 @@ def get_selected_Cgpa(user_id):
         print(f"Error retrieving cgpa: {e}")
         return []
     
+
+def predict_future_cgpa(selected_cgpa_list):
+    num_semesters = len(selected_cgpa_list)
+    X = np.arange(1, num_semesters + 1).reshape(-1, 1)
+    y = np.array(selected_cgpa_list)
+
+    model = LinearRegression()
+    model.fit(X, y)
+
+    future_semesters = np.arange(num_semesters + 1, min(num_semesters + 6, 9)).reshape(-1, 1)
+    predicted_cgpa = model.predict(future_semesters)
+    predicted_cgpa = np.minimum(predicted_cgpa, 10)
+    return predicted_cgpa
+
 
 # Route to handle user requests
 @app.route('/user', methods=['POST'])
@@ -103,11 +121,23 @@ def receive_user_id_cgpa():
         user_id = request.json.get('userId')
         if user_id:
             output = get_selected_Cgpa(user_id)
+            # print(output)
             if output is not None:
-                cgpa = generate_output_cgpa(output)
+                cgpa = predict_future_cgpa(output)
                 if cgpa is not None:
-                    print(cgpa)
-                    return jsonify({'cgpa': cgpa}), 200
+                   num_semesters = len(output)
+                   future_semesters = np.arange(num_semesters + 1, min(num_semesters + 6, 9))
+                   plt.plot(future_semesters, cgpa, linestyle='dashed', color='green')  # Line for predicted CGPAs
+                   plt.scatter(np.arange(1, num_semesters + 1), output, color='blue', label='Past CGPA')
+                   plt.scatter(future_semesters, cgpa, color='green', label='Predicted CGPA')
+                   plt.title('CGPA Prediction for Future Semesters')
+                   plt.xlabel('Semester Number')
+                   plt.ylabel('CGPA')
+                   plt.ylim(0, 10)
+                   plt.legend()
+                   plt.grid(True)
+                   plt.show()
+                   return 'Graph displayed successfully', 200  
                 else:
                     return 'Error in generating LLM response', 200
             else:
@@ -117,16 +147,7 @@ def receive_user_id_cgpa():
     except Exception as e:
         print('Error:', e)
         return 'Internal Server Error', 
-# Function to generate response using GenerativeAI model
-def generate_output_cgpa(selected_cgpa_list):
-    try:
-        model = genai.GenerativeModel("gemini-pro")
-        prompt_2 = f"""just display cgpa:{selected_cgpa_list}."""  
-        response_2 = model.generate_content(prompt_2)
-        return response_2.text
-    except Exception as e:
-        error_message = f"Error generating response: {e}"
-        return error_message
+
     
 
 # Start Flask app

@@ -1,0 +1,87 @@
+
+<!doctype html>
+
+<html lang="en"> 
+
+ <head> 
+
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Output Page</title>
+
+  <link rel="stylesheet" href="/static/output.css"> 
+
+ </head> 
+
+ <body>
+  <h1>
+    Performance Analytics
+  </h1>
+  <div class="content">
+    <div class="graph-section">
+{% if user_id %}
+<!-- Assuming your image file is named User_id_performance_graph.png -->
+<img src="{{ url_for('static', filename=user_id + '_performance_graph.png') }}" alt="Performance Graph" class="graph-image">
+{% else %}
+<p>No user ID provided.</p>
+{% endif %}
+</div>
+
+
+<div class="tips-section">
+  <h2>Tips</h2>
+  <p id="tips-placeholder">Loading tips...</p>
+</div>
+</div>
+
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+  import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyCpFl0lAVKcKrg5gCzlz2RuQ3zt7xCY_dc",
+    authDomain: "student-performance-pred-f6c38.firebaseapp.com",
+    projectId: "student-performance-pred-f6c38",
+    storageBucket: "student-performance-pred-f6c38.appspot.com",
+    messagingSenderId: "563801963757",
+    appId: "1:563801963757:web:e96ecb591d2820986160e4",
+    measurementId: "G-6Z11YCS39Q"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+   // Function to fetch tips for the specified user ID
+   async function fetchTips(user_id) {
+      try {
+        // Construct the Firestore document reference
+        const userDocRef = doc(db, "users", user_id);
+
+        // Fetch the document snapshot
+        const docSnap = await getDoc(userDocRef);
+
+        // Check if the document exists and has the tips field
+        if (docSnap.exists()) {
+          const tips = docSnap.data().tips;
+          const tipsPlaceholder = document.getElementById("tips-placeholder");
+          tipsPlaceholder.textContent = tips ? tips : "No tips available.";
+        } else {
+          console.log("User document not found.");
+        }
+      } catch (error) {
+        console.error("Error fetching tips:", error);
+      }
+    }
+    
+  var user_id = "{{ user_id }}"; // Get user_id from Flask
+  fetchTips(user_id);
+
+  </script>
+ </body>
+ </html>

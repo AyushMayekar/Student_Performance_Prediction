@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+body {
+  background-color: #252424;
+  color: #0f0; /* Text color */
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  width: 80%; /* Adjust as needed */
+  margin: 0 auto; /* Center the container horizontally */
+  padding: 20px; /* Add some padding */
+}
+
+h1 {
+  text-align: center; /* Center the heading */
+}
+
+.graph-section {
+  float: left; /* Float the graph section to the left */
+  width: 60%; /* Adjust width as needed */
+}
+
+.tips-section {
+  float: right; /* Float the tips section to the right */
+  width: 40%; /* Adjust width as needed */
+}
+
+.content::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.graph-image {
+  display: block; /* Make the image a block element */
+  margin: 0 auto; /*Center the image horizontally*/
+  max-width: 100%; /* Ensure the image doesn't exceed its container */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.error-message {
+  text-align: center; /* Center the error message */
+}
+
+.tips-section p {
+  font-size: 16px; /* Adjust font size as needed */
+  line-height: 1.5; /* Adjust line height as needed */
+}
+

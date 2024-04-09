@@ -41,6 +41,9 @@ h1 {
   width: 40%; /* Adjust width as needed */
 }
 
+.comparison-section{
+  text-align: center;
+}
 .content::after {
   content: "";
   display: table;
@@ -63,3 +66,7 @@ h1 {
   line-height: 1.5; /* Adjust line height as needed */
 }
 
+.comparison-section p{
+  font-size: 17px;
+  line-height: 2.5;
+}

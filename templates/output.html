@@ -48,6 +48,9 @@
   <img src="{{ url_for('static', filename='Ideal_performance_piechart.png') }}" alt="Ideal Performance Pie Chart" class="Performance_Chart">
 </div>
 </div>
+<div class="comparison-section">
+  <p id="comparison-placeholder">Loading comparison...</p>
+</div>
 </div>
 <script type="module">
   // Import the functions you need from the SDKs you need
@@ -97,8 +100,37 @@
       }
     }
     
+
+      // Function to fetch comparison for the specified user ID
+      async function fetchComparison(user_id) {
+      try {
+        // Construct the Firestore document reference
+        const userDocRef = doc(db, "users", user_id);
+
+        // Fetch the document snapshot
+        const docSnap = await getDoc(userDocRef);
+
+        // Check if the document exists and has the comparison field
+        if (docSnap.exists()) {
+          const comparison = docSnap.data().comparison;
+          const comparisonPlaceholder = document.getElementById("comparison-placeholder");
+          if (comparison) {
+            comparisonPlaceholder.innerHTML = comparison.split('\n').join('<br>');
+          } else {
+            comparisonPlaceholder.textContent = "No comparison available.";
+          }
+        } else {
+          console.log("User document not found.");
+        }
+      } catch (error) {
+        console.error("Error fetching comparison:", error);
+      }
+    }
+
+
   var user_id = "{{ user_id }}"; // Get user_id from Flask
   fetchTips(user_id);
+  fetchComparison(user_id);
 
   </script>
  </body>

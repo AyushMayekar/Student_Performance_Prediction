@@ -113,6 +113,7 @@ def retrieve_other_info(user_id):
         except Exception as e:
             print(f"Error retreiving other info: {e}")     
 
+
 # Route to handle user requests
 @app.route('/user', methods=['POST'])
 def receive_user_id():
@@ -135,6 +136,8 @@ def receive_user_id():
         print('Error:', e)
         return 'Internal Server Error', 500
 
+
+
 # Function to generate response using GenerativeAI model
 def generate_output(selected_subjects_list):
     try:
@@ -145,6 +148,7 @@ def generate_output(selected_subjects_list):
     except Exception as e:
         error_message = f"Error generating response: {e}"
         return error_message
+    
 
 
 @app.route('/cgpa', methods=['POST'])
@@ -156,31 +160,22 @@ def receive_user_id_cgpa():
             piechart=retrieve_other_info(user_id)
             if output and piechart is not None:
                 piechart_data = {key: value for key, value in piechart.items() if key != 'learningStyle'}
+                total_hours = 24
+                screen_time = int(piechart_data.get('screenTime', 0))
+                study_time = int(piechart_data.get('studyHours', 0))
+                sleep_hours = int(piechart_data.get('sleepingHours', 0))
+                other_activities_hours = total_hours - (screen_time + study_time + sleep_hours)
+                piechart_data['Other Activities'] = other_activities_hours
                 cgpa = predict_future_cgpa(output)
                 if cgpa is not None:
-                   create_piechart(user_id,piechart_data)
-                   num_semesters = len(output)
-                   future_semesters = np.arange(num_semesters + 1, min(num_semesters + 6, 9))
-                   plt.figure(figsize=(8, 6))
-                   plt.plot(future_semesters, cgpa, linestyle='dashed', color='green')  # Line for predicted CGPAs
-                   plt.scatter(np.arange(1, num_semesters + 1), output, color='blue', label='Past CGPA')
-                   plt.scatter(future_semesters, cgpa, color='green', label='Predicted CGPA')
-                   plt.title('CGPA Prediction for Future Semesters')
-                   plt.xlabel('Semester Number')
-                   plt.ylabel('CGPA')
-                   plt.xlim(0,9)
-                   plt.ylim(0, 11)
-                   plt.subplots_adjust(top=0.9,bottom=0.1)
-                   plt.legend()
-                   plt.grid(True)
-                   filename=f"static/{user_id}_performance_graph.png"
-                   plt.savefig(filename)
-                   plt.clf()
                    tips=generate_tips(output,cgpa)
-                   if user_id and tips:
+                   create_piechart(user_id,piechart_data)
+                   Create_Graph(output,cgpa,user_id)
+                   comparison=generate_comparison(piechart_data)
+                   if user_id and tips and comparison:
                        user_ref = db.collection('users').document(user_id)
-                       user_ref.update({'tips': tips})
-                       return redirect(url_for('output',user_id=user_id))
+                       user_ref.update({'tips': tips,'comparison': comparison})
+                       return redirect(url_for('display_output',user_id=user_id))
                    else:
                         return 'User ID or tips not generated', 500
                 else:
@@ -193,6 +188,8 @@ def receive_user_id_cgpa():
         print('Error:', e)
         return 'Internal Server Error', 
 
+
+
 def generate_tips(selected_cgpa_list,predicted_cgpa):
     try:
         model = genai.GenerativeModel("gemini-pro")
@@ -204,14 +201,8 @@ def generate_tips(selected_cgpa_list,predicted_cgpa):
         error_message = f"Error generating response: {e}"
         return error_message
     
+
 def create_piechart(user_id,piechart_data):
-    total_hours = 24
-    screen_time = int(piechart_data.get('screenTime', 0))
-    study_time = int(piechart_data.get('studyHours', 0))
-    sleep_hours = int(piechart_data.get('sleepingHours', 0))
-    other_activities_hours = total_hours - (screen_time + study_time + sleep_hours)
-    piechart_data['Other Activities'] = other_activities_hours
-    print(piechart_data)
     labels = list(piechart_data.keys())
     values = list(piechart_data.values())
     colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
@@ -222,6 +213,50 @@ def create_piechart(user_id,piechart_data):
     plt.savefig(piechart_filename)
     plt.clf()    
     return 'Piechart saved'
+
+
+def Create_Graph(output,cgpa,user_id):
+     num_semesters = len(output)
+     future_semesters = np.arange(num_semesters + 1, min(num_semesters + 6, 9))
+     plt.figure(figsize=(8, 6))
+     plt.plot(future_semesters, cgpa, linestyle='dashed', color='green')  # Line for predicted CGPAs
+     plt.scatter(np.arange(1, num_semesters + 1), output, color='blue', label='Past CGPA')
+     plt.scatter(future_semesters, cgpa, color='green', label='Predicted CGPA')
+     plt.title('CGPA Prediction for Future Semesters')
+     plt.xlabel('Semester Number')
+     plt.ylabel('CGPA')
+     plt.xlim(0,9)
+     plt.ylim(0, 11)
+     plt.subplots_adjust(top=0.9,bottom=0.1)
+     plt.legend()
+     plt.grid(True)
+     filename=f"static/{user_id}_performance_graph.png"
+     plt.savefig(filename)
+     plt.clf()
+     return "Image Saved Successfully!"
+
+
+def generate_comparison(piechart_data):
+    try:
+        model = genai.GenerativeModel("gemini-pro")
+        ideal_data={'Max_ScreenTime':2, 'Enough_SleepHours':8, 'Min-StudyTime':2,'Other_Activities':12}
+        prompt_2 = f"""Task: Compare a student's current daily schedule with an ideal daily schedule and provide strategies to align them.
+
+Instructions:
+
+Given the current daily schedule of the student and an ideal daily schedule, provide comparative strategies to help the student achieve a schedule closer to the ideal one.
+Present the strategies in concise bullet points, maintaining a professional tone and avoiding the use of bold formatting.
+Prompt:
+"Student's Current Daily Schedule: ({piechart_data})
+Ideal Daily Schedule: ({ideal_data})
+
+Compare the student's current daily schedule with the ideal daily schedule and provide comparative strategies to achieve alignment. Offer concise bullet-point recommendations for adjusting the student's schedule to better match the ideal one. Ensure the strategies are practical, actionable, and presented in a professional manner without using bold formatting."""
+
+        response = model.generate_content(prompt_2)
+        return response.text
+    except Exception as e:
+        error_message = f"Error generating response: {e}"
+        return error_message
 
        
 

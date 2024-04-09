@@ -33,8 +33,22 @@
   <p id="tips-placeholder">Loading tips...</p>
 </div>
 </div>
-
-
+<h2>Performance Charts</h2>
+<div class="content1">
+<div class="Performance_Chart">
+  {% if user_id %}
+<!-- Assuming your image file is named User_id_performance_graph.png -->
+<img src="{{ url_for('static', filename=user_id + '_performance_piechart.png') }}" alt="Performance Pie Chart" class="Performance_Chart">
+{% else %}
+<p>No Piecharts available.</p>
+{% endif %}
+</div>
+<div class="ideal-piechart">
+  <!-- Assuming your image file is named ideal_performance_piechart.png -->
+  <img src="{{ url_for('static', filename='Ideal_performance_piechart.png') }}" alt="Ideal Performance Pie Chart" class="Performance_Chart">
+</div>
+</div>
+</div>
 <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
@@ -70,7 +84,11 @@
         if (docSnap.exists()) {
           const tips = docSnap.data().tips;
           const tipsPlaceholder = document.getElementById("tips-placeholder");
-          tipsPlaceholder.textContent = tips ? tips : "No tips available.";
+          if(tips){
+            tipsPlaceholder.innerHTML=tips.split('\n').join('<br>');
+          } else{
+          tipsPlaceholder.textContent = "No tips available.";
+          }
         } else {
           console.log("User document not found.");
         }

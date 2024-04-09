@@ -90,6 +90,29 @@ def predict_future_cgpa(selected_cgpa_list):
     return predicted_cgpa
 
 
+def retrieve_other_info(user_id):
+        try:
+             user_ref = db.collection('users').document(user_id)
+             user_doc = user_ref.get()
+
+             if user_doc.exists:
+                 other_info={}
+                 data=user_doc.to_dict()
+                 if 'sleepingHours' in data:
+                    other_info['sleepingHours'] = data['sleepingHours']
+                 if 'studyHours' in data:
+                    other_info['studyHours'] = data['studyHours']
+                 if 'screenTime' in data:
+                    other_info['screenTime'] = data['screenTime']
+                 if 'learningStyle' in data:
+                    other_info['learningStyle'] = data['learningStyle']
+
+                 return other_info
+             else :
+                 return f'doc {user_id} does not exist'
+        except Exception as e:
+            print(f"Error retreiving other info: {e}")     
+
 # Route to handle user requests
 @app.route('/user', methods=['POST'])
 def receive_user_id():
@@ -130,10 +153,12 @@ def receive_user_id_cgpa():
         user_id = request.json.get('userId')
         if user_id:
             output = get_selected_Cgpa(user_id)
-            # print(output)
-            if output is not None:
+            piechart=retrieve_other_info(user_id)
+            if output and piechart is not None:
+                piechart_data = {key: value for key, value in piechart.items() if key != 'learningStyle'}
                 cgpa = predict_future_cgpa(output)
                 if cgpa is not None:
+                   create_piechart(user_id,piechart_data)
                    num_semesters = len(output)
                    future_semesters = np.arange(num_semesters + 1, min(num_semesters + 6, 9))
                    plt.figure(figsize=(8, 6))
@@ -179,6 +204,24 @@ def generate_tips(selected_cgpa_list,predicted_cgpa):
         error_message = f"Error generating response: {e}"
         return error_message
     
+def create_piechart(user_id,piechart_data):
+    total_hours = 24
+    screen_time = int(piechart_data.get('screenTime', 0))
+    study_time = int(piechart_data.get('studyHours', 0))
+    sleep_hours = int(piechart_data.get('sleepingHours', 0))
+    other_activities_hours = total_hours - (screen_time + study_time + sleep_hours)
+    piechart_data['Other Activities'] = other_activities_hours
+    print(piechart_data)
+    labels = list(piechart_data.keys())
+    values = list(piechart_data.values())
+    colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
+    plt.pie(values, labels=labels,colors=colors, autopct='%1.1f%%', startangle=140)
+    plt.title('PIECHART OF YOUR DAILY SCHEDULE')
+    plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle
+    piechart_filename=f"static/{user_id}_performance_piechart.png"
+    plt.savefig(piechart_filename)
+    plt.clf()    
+    return 'Piechart saved'
 
        
 

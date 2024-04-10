@@ -276,7 +276,7 @@ for (let i = 1; i <= 8; i++) {
               selectedSubjects: selectedSubjects
             });
            // Optionally, redirect to another page after submission
-                // window.location.href = "success.html";
+                window.location.href = `http://127.0.0.1:5000/kt_output/${user.uid}`;
                 alert('Form submitted successfully!');
         } catch (error) {
             console.error('User input error:', error.message);

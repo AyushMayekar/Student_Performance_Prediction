@@ -4,7 +4,7 @@ from firebase_admin import firestore
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
-from flask import Flask, request, jsonify,render_template,redirect,url_for,session
+from flask import Flask, request, jsonify,render_template,redirect,url_for
 from flask_cors import CORS
 import numpy as np
 import matplotlib.pyplot as plt
@@ -121,11 +121,22 @@ def receive_user_id():
         user_id = request.json.get('userId')
         if user_id:
             output = get_selected_subjects(user_id)
-            if output is not None:
-                tips = generate_output(output)
-                if tips is not None:
-                    print(tips)
-                    return jsonify({'tips': tips}), 200
+            piechart=retrieve_other_info(user_id)
+            if output and piechart is not None:
+                piechart_data = {key: value for key, value in piechart.items() if key != 'learningStyle'}
+                total_hours = 24
+                screen_time = int(piechart_data.get('screenTime', 0))
+                study_time = int(piechart_data.get('studyHours', 0))
+                sleep_hours = int(piechart_data.get('sleepingHours', 0))
+                other_activities_hours = total_hours - (screen_time + study_time + sleep_hours)
+                piechart_data['Other Activities'] = other_activities_hours
+                kt_tips = generate_output(output)
+                comparison=generate_comparison(piechart_data)
+                create_piechart(user_id,piechart_data)
+                if kt_tips and comparison :
+                    user_ref = db.collection('users').document(user_id)
+                    user_ref.update({'kt_tips': kt_tips,'comparison': comparison})
+                    return redirect(url_for('display_kt_output',user_id=user_id))
                 else:
                     return 'Error in generating LLM response', 200
             else:
@@ -142,13 +153,58 @@ def receive_user_id():
 def generate_output(selected_subjects_list):
     try:
         model = genai.GenerativeModel("gemini-pro")
-        prompt_2 = f"""semester and subjects:{selected_subjects_list}."""  
+        prompt_2 = f"""Semester and Subjects: ({selected_subjects_list})
+
+Goal: Develop effective strategies to improve academic performance in the above given subjects.
+
+Request: Please provide concise and professional bullet points on achieving these goals for each subject listed.
+
+Additionally:
+
+Focus on actionable strategies that can be implemented immediately.
+Prioritize clear and easy-to-understand explanations."""  
         response_2 = model.generate_content(prompt_2)
         return response_2.text
     except Exception as e:
         error_message = f"Error generating response: {e}"
         return error_message
     
+
+
+def generate_comparison(piechart_data):
+    try:
+        model = genai.GenerativeModel("gemini-pro")
+        ideal_data={'Max_ScreenTime':2, 'Enough_SleepHours':8, 'Min-StudyTime':2,'Other_Activities':12}
+        prompt_2 = f"""Task: Compare a student's current daily schedule with an ideal daily schedule and provide strategies to align them.
+
+Instructions:
+
+Given the current daily schedule of the student and an ideal daily schedule, provide comparative strategies to help the student achieve a schedule closer to the ideal one.
+Present the strategies in concise bullet points, maintaining a professional tone and avoiding the use of bold formatting.
+Prompt:
+"Student's Current Daily Schedule: ({piechart_data})
+Ideal Daily Schedule: ({ideal_data})
+
+Compare the student's current daily schedule with the ideal daily schedule and provide comparative strategies to achieve alignment. Offer concise bullet-point recommendations for adjusting the student's schedule to better match the ideal one. Ensure the strategies are practical, actionable, and presented in a professional manner without using bold formatting."""
+
+        response = model.generate_content(prompt_2)
+        return response.text
+    except Exception as e:
+        error_message = f"Error generating response: {e}"
+        return error_message
+
+
+def create_piechart(user_id,piechart_data):
+    labels = list(piechart_data.keys())
+    values = list(piechart_data.values())
+    colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
+    plt.pie(values, labels=labels,colors=colors, autopct='%1.1f%%', startangle=140)
+    plt.title('PIECHART OF YOUR DAILY SCHEDULE')
+    plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle
+    piechart_filename=f"static/{user_id}_performance_piechart.png"
+    plt.savefig(piechart_filename)
+    plt.clf()    
+    return 'Piechart saved'
 
 
 @app.route('/cgpa', methods=['POST'])
@@ -264,6 +320,10 @@ Compare the student's current daily schedule with the ideal daily schedule and p
 def display_output(user_id):
        return render_template("output.html", user_id=user_id)
 
+
+@app.route('/kt_output/<string:user_id>')
+def display_kt_output(user_id):
+    return render_template("kt-output.html", user_id=user_id)
 
 
     

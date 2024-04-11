@@ -127,12 +127,7 @@
   <div class="move">
     <h2 style="color: #fff; text-align:center; ">SEM 8</h2></div>
 </div>
-    <!-- <div class="select">
-
-      <div class="select__item">HTML</div>
-      <div class="select__item">CSS</div>
-      <div class="select__item">JavaSript</div>
-    </div>  -->
+   
 
     <script src="kt.js"></script>
 
@@ -166,7 +161,6 @@
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
     import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
     import { getFirestore, collection, setDoc,doc, updateDoc,getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
-    // import { getFirestore, collection, setDoc,doc, updateDoc,getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
     
     // TODO: Add SDKs for Firebase products that you want to use
     // https://firebase.google.com/docs/web/setup#available-libraries
@@ -277,7 +271,6 @@ for (let i = 1; i <= 8; i++) {
             });
            // Optionally, redirect to another page after submission
                 window.location.href = `http://127.0.0.1:5000/kt_output/${user.uid}`;
-                alert('Form submitted successfully!');
         } catch (error) {
             console.error('User input error:', error.message);
             alert('Error: ' + error.message);

@@ -96,7 +96,6 @@
         try {
                 await signInWithEmailAndPassword(auth, email, password);
                 console.log('User logged in successfully');
-                alert('Login successful! Redirecting to dashboard...');
                 window.location.href = "dashboard.html"; // Redirect to the dashboard after successful login
             } catch (error) {
                 console.error('Login error:', error.message);

@@ -249,7 +249,7 @@ def receive_user_id_cgpa():
 def generate_tips(selected_cgpa_list,predicted_cgpa):
     try:
         model = genai.GenerativeModel("gemini-pro")
-        prompt_2 = f"""Given your historical CGPA records:({selected_cgpa_list}) and the predicted future CGPAs:({predicted_cgpa}), provide tailored strategies to either address a declining trend or capitalize on an inclining trend in academic performance(only one) checking only from left to right in the given data collectively. Ensure the output offers clear and actionable advice suitable for the identified trend, maintaining a professional and easily understandable structure without using any bold formatting."""
+        prompt_2 = f"""Given your historical CGPA records:({selected_cgpa_list}) and the predicted future CGPAs:({predicted_cgpa}), provide tailored strategies to either address a declining trend or capitalize on an inclining trend in academic performance(only one) compulsorily checking only from left to right in the given data collectively. Ensure the output offers clear and actionable advice suitable for the identified trend, maintaining a professional and easily understandable structure without using any bold formatting."""
 
         response_2 = model.generate_content(prompt_2)
         return response_2.text

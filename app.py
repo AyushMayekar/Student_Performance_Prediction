@@ -32,7 +32,7 @@ genai.configure(api_key=gemini_api_key)
 
 # Initialize Firebase Admin SDK
 if not firebase_admin._apps:
-    cred = credentials.Certificate(r"C:\Users\ayush\OneDrive\Desktop\Student Performance Prediction\config_key.json")
+    cred = credentials.Certificate(r"C:\Users\afnan_sdcddxx\Student_Performance_Prediction\config_key.json")
     firebase_admin.initialize_app(cred)
 db = firestore.client()
 

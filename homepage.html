@@ -1,109 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StudentGrader</title>
-  <link
-      rel="stylesheet"
-      href="homepage.css"
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PERFORMX</title>
+    <link
+      rel="shortcut icon"
+      href="https://sidcupfamilygolf.com/wp-content/themes/puttosaurus/favicons/favicon-32x32.png"
+      type="image/x-icon"
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="homepage.css" />
+  </head>
+
   <style>
-    /* Basic styles */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: sans-serif;
-    }
-    header {
-      background-color: #f0f0f0;
-      padding: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    header h1 {
-      margin: 0;
-    }
-    header nav {
-      display: flex;
-      list-style: none;
-      padding: 0;
-      align-items: center;
-    }
-    header nav li {
-      margin-right: 20px;
-    }
-    header nav a {
+    #nav a {
       text-decoration: none;
-      color: black;
     }
-    main {
-      padding: 20px;
-    }
-    h2 {
-      margin-bottom: 10px;
-    }
-    p {
-      margin-bottom: 15px;
-    }
-    .button {
-      background-color: #4CAF50; /* Green */
-      border-radius: 12px;
-      color: white;
-      padding: 10px 20px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin-top: 10px;
-    }
-
-    .good {
-        background-color: #4CAF50; /* Green */
-        border-radius: 12px ;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 14px;
-        /*margin-top: 8px;*/
-      }
-      .footer{
-        min-height: 100px;
-        background-color: black;
-        margin-top: 50%;
-      }
-      .footer h2{
-        color: #f0f0f0;
-      }
   </style>
-</head>
-<body>
-  <!-- <section> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span>  -->
-
-  <header>
-    <h1>StudentGrader</h1>
-    <nav>
-      <li><a href="#">About Us</a></li>
-      <li><a href="#">Solutions</a></li>
-      <li><a href="#">Contact Us</a></li>
-      <li><a href="login.html" class="good">Login</a></li>
-    </nav>
-  </header>
-    <main>
-    <h2>"Unlock Your Academic Potential: Where Data Meets Excellence."</h2>
-    <p>Embark on a Journey of Insight and Growth, where each student's unique potential is illuminated by the guiding light of data. We're more than just a predictor;</p>
-    <p>we're architects of academic success, sculpting paths towards excellence through personalized solutions and empowerment.</p>
-    <a href="signup.html" class="button">Get Started</a>
-  </main>
-  <!-- </section> -->
-
-  <footer>
-    <div class="footer" >
-      <h2>dffdf</h2>
+  <body>
+    <div id="nav">
+      <img 
+        src="Logo1.png"
+        alt=""
+      />
+      <h4><a href="#main">HOME</a></h4>
+      <h4><a href="#page2">HOW TO USE ?</a></h4>
+      <h4><a href="#page3">DEVELOPERS</a></h4>
+      <h4><a href="#footer">CONTACT</a></h4>
+      <h4><a href="#page2">ABOUT US</a></h4>
     </div>
-  </footer>
-</body>
+    <div id="cursor"></div>
+    <div id="cursor-blur"></div>
+
+    <video
+      autoplay
+      loop
+      muted
+      src="Video.webm"
+    ></video>
+    <div id="main">
+      <div id="page1">
+        <h1>PERFORMX</h1>
+        <h2>STUDENT PERFORMANCE PREDICTOR</h2>
+        <p>
+          Embark on a journey of Insight and Growth where each student unique potential is illuminated by the guiding light of data ! <br>
+           We are more than just a Predictor , we are architect of academic success sculpting parts over excellence through personalised solution and Empowerment.
+        </p>
+        <div id="arrow">
+          <i class="ri-arrow-down-line"></i>
+        </div>
+        <div id="arrow1">
+          <a href="login.html" class="LOG" style="text-decoration: none;">LOG IN</a>
+        </div>
+      </div>
+      <div id="page2">
+        <div id="scroller">
+          <div id="scroller-in">
+            <h4>. STUDENT</h4>
+            <h4>. PERFORMANCE</h4>
+            <h4>. PREDICTOR</h4>
+            <h4>. ACADEMICS</h4>
+          </div>
+          <div id="scroller-in">
+            <h4>. STUDENT</h4>
+            <h4>. PERFORMANCE</h4>
+            <h4>. PREDICTOR</h4>
+            <h4>. ACADEMICS</h4>
+          </div>
+        </div>
+        <div id="about-us">
+          <img
+            src="https://images.pexels.com/photos/4145069/pexels-photo-4145069.jpeg?auto=compress&cs=tinysrgb&w=600"
+            alt=""
+          />
+          <div id="about-us-in">
+            <h3>ABOUT US</h3>
+            <p>
+              Our Performx aim is simple , here we want to elevate student performance through personalized predictions and actionable insights.
+               We empower students to reach their full potential by providing accurate assessments of future academic outcomes. 
+               Join us in transforming education for a brighter tomorrow .
+            </p>
+          </div>
+          <img
+            src="https://images.pexels.com/photos/4144148/pexels-photo-4144148.jpeg?auto=compress&cs=tinysrgb&w=600"
+            alt=""
+          />
+        </div>
+        <h2 id="HOW" style="font-size:80px;">HOW TO USE ?</h2>
+        <div id="cards-container">
+          <div class="card" id="card1">
+            <div class="overlay">
+              <h4>NITISH JHA</h4>
+              <p>
+               Frontend , UI , UX Developer
+                </p>
+            </div>
+          </div>
+          <div class="card" id="card2">
+            <div class="overlay">
+              <h4 style="left: 10px;">AYUSH MAYEKAR </h4>
+              <p>
+              Backend & Machine Learning Developer  
+              </p>
+            </div>
+          </div>
+          <div class="card" id="card3">
+            <div class="overlay">
+              <h4> AFNAN PATHAN</h4>
+              <p>
+                Backend & Machine Learning Developer 
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="green-div">
+          <img
+            src="https://eiwgew27fhz.exactdn.com/wp-content/themes/puttosaurus/img/dots-side.svg"
+            alt=""
+          />
+          <h4>
+            So what are you waiting for ? <br> Click here &nbsp;
+             <a class="btn" href="signup.html" >GET STARTED </a> 
+             &nbsp; and start your live academic performance prediction 
+          </h4>
+          <img
+            src="https://eiwgew27fhz.exactdn.com/wp-content/themes/puttosaurus/img/dots-side.svg"
+            alt=""
+          />
+        </div>
+      </div>
+      <div id="page3">
+        <p>
+          Unlock your academic potential with personalized predictions. Empowering students to excel, one prediction at a time. Discover what lies ahead on your educational journey. Transforming education, one student at a time.
+        </p>
+        <img
+          id="colon1"
+          src="https://eiwgew27fhz.exactdn.com/wp-content/themes/puttosaurus/img/quote-left.svg"
+          alt=""
+        />
+        <img
+          id="colon2"
+          src="https://eiwgew27fhz.exactdn.com/wp-content/themes/puttosaurus/img/quote-right.svg"
+          alt=""
+        />
+      </div>
+      <div id="page4">
+        <h1 style="top: -200px;">DEVELOPERS</h1>
+        <div class="elem">
+          <h2>STEP 1</h2>
+          <h4>LOGIN / SINGUP</h4>
+          <h6>Create an account or log in.<br> It's like getting your key to access the website.</h6> 
+          
+            
+          />
+        </div>
+        <div class="elem">
+          <h2>STEP 2</h2>
+          <h4>FILL UP DETAIL'S</h4>
+          <h6>Share your grades, test scores, etc.<br> It's like telling us about your academic journey.</h6> 
+          
+        </div>
+        <div class="elem">
+          <h2>STEP 3</h2>
+          <h4>Display Prediction </h4>
+          <h6>See your future academic prediction.<br> It's like getting a sneak peek into what might lie ahead.</h6> 
+          
+        </div>
+      </div>
+      <div id="footer">
+        <img
+          src="https://eiwgew27fhz.exactdn.com/wp-content/themes/puttosaurus/img/dots-footer.svg"
+          alt=""
+        />
+        <div id="f1">
+          <img
+            src=""
+            alt=""
+          />
+        </div>
+        <div id="f2">
+          <h3>Vidyavardhini </h3>
+          <h3>College of Engineering</h3>
+          <h3>and Tecnology</h3>
+          <h3>Vasai West</h3>
+        </div>
+        <div id="f3">
+          <h3>Contact us on </h3>
+          <h3>Linkedln</h3>
+        
+        </div>
+        <div id="f4">
+          <h4>
+           <a href="https://www.linkedin.com/in/nitish-jha-9b0168233?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" style="text-decoration: none;" >Nitish Jha</a>
+           <a href="https://www.linkedin.com/in/ayush-mayekar-b9b883284" style="text-decoration: none;">Ayush Mayekar</a>
+           <a href="https://www.linkedin.com/in/afnan-pathan-838866269/" style="text-decoration: none;" >Afnan Pathan</a> 
+          </h4>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/gsap.min.js"
+      integrity="sha512-qF6akR/fsZAB4Co1QDDnUXWnaQseLGXoniuSuSlPQK6+aWhlMZcHzkasCSlnWoe+TJuudlka1/IQ01Dnhgq95g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.1/ScrollTrigger.min.js"
+      integrity="sha512-IHDCHrefnBT3vOCsvdkMvJF/MCPz/nBauQLzJkupa4Gn4tYg5a6VGyzIrjo6QAUy3We5HFOZUlkUpP0dkgE60A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="homepage.js"></script>
+  </body>
 </html>

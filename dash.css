@@ -1,7 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 
-
-
 *
 {
   margin: 0;
@@ -304,7 +302,7 @@ input[type="submit"]:active
 section .signin2
 {
   position: absolute;
-  top: 800px;
+  top: 870px;
   left: 10px;
   width: 100%;
   background: #222;  
@@ -435,7 +433,7 @@ body {
 section .signin3
 {
   position: absolute;
-  top: 1000px;
+  top: 1070px;
   left: 10px;
   width: 100%;
   background: #222;  
@@ -548,7 +546,7 @@ input[type="submit"]:active
 section .signin4
 {
   position: absolute;
-top: 400px;
+top: 420px;
 left: 10px;
   width: 100%;
   background: #222;  
@@ -673,7 +671,7 @@ input[type="submit"]:active
 section .signin5
 {
   position: absolute;
-top: 590px;
+top: 630px;
 left: 10px;
   width: 100%;
   background: #222;  
@@ -731,6 +729,7 @@ section .signin5 .content5 .form5 .inputBox4 i
 {
   position: absolute;
   left: 0;
+
   padding: 15px 10px;
   font-style: normal;
   color: #aaa;
@@ -741,7 +740,7 @@ section .signin5 .content5 .form5 .inputBox4 i
 .signin5 .content5 .form5 .inputBox5 input:valid ~ i
 {
   transform: translateY(-7.5px);
-  font-size: 0.8em;
+  font-size: larger;
   color: #fff;
 }
 .signin5 .content5 .form5 .links 
@@ -792,4 +791,184 @@ input[type="submit"]:active
   }
 }
 
+/* Example CSS for styling the slider */
+input[type="range"] {
+  width: 100%; /* Adjust width as needed */
+  /* -webkit-appearance: none; Remove default styling */
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Remove default styling */
+  width: 20px; /* Set thumb width */
+  height: 20px; /* Set thumb height */
+  background-color: #0f0; /* Set thumb color */
+  border-radius: 50%; /* Round the thumb */
+  cursor: pointer; /* Show pointer cursor */
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%; /* Set track width */
+  height: 6px; /* Set track height */
+  background-color: #0f0; /* Set track color */
+  border-radius: 3px; /* Round the track */
+}
+
+.submit-btn {
+  text-align: center;
+  margin-top: 20px; /* Adjust as needed */
+}
+
+.submit-btn button {
+  background-color: green;
+  color:#0f0;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit-btn button:hover {
+  background-color: darkgreen;
+}
+
 /* sixth question ends */
+
+/* submit button start */
+
+
+section .signin7
+{
+  position: absolute;
+  top: 1340px;
+  left: 1200px;
+  width: 0%;
+  background: #222;  
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  border-radius: 4px;
+  box-shadow: 0 15px 35px rgba(0,0,0,9);
+}
+section .signin7 .content7 
+{
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+}
+section .signin7 .content7 h2 
+{
+  font-size: 2em;
+  color: #0f0;
+  text-transform: uppercase;
+}
+section .signin7 .content7 .form7
+{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+section .signin7 .content7 .form7 .inputBox7
+{
+  position: relative;
+  width: 100%;
+}
+section .signin7 .content7 .form7 .inputBox7 input 
+{
+  position: relative;
+  width: 100%;
+  background: #333;
+  border: none;
+  outline: none;
+  padding: 25px 10px 7.5px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1em;
+}
+section .signin7 .content7 .form7 .inputBox7 i 
+{
+  position: absolute;
+  left: 0;
+  padding: 15px 10px;
+  font-style: normal;
+  color: #aaa;
+  transition: 0.5s;
+  pointer-events: none;
+}
+.signin7 .content7 .form7 .inputBox7 input:focus ~ i,
+.signin7 .content7 .form7 .inputBox7 input:valid ~ i
+{
+  transform: translateY(-7.5px);
+  font-size: 0.8em;
+  color: #fff;
+}
+.signin7 .content7 .form7 .links 
+{
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.signin7 .content7 .form7 .links a 
+{
+  color: #fff;
+  text-decoration: none;
+}
+.signin7 .content7 .form7 .links a:nth-child(2)
+{
+  color: #0f0;
+  font-weight: 600;
+}
+.signin7 .content7 .form7 .inputBox7 input[type="submit"]
+{
+  padding: 5px;
+  width: 100px;
+  left: 100px;
+  background: #0f0;
+  color: #000;
+  font-weight: 600;
+  font-size: 1.35em;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+input[type="submit"]:active
+{
+  opacity: 0.6;
+}
+@media (max-width: 900px)
+{
+  section span 
+  {
+    width: calc(10vw - 2px);
+    height: calc(10vw - 2px);
+  }
+}
+@media (max-width: 600px)
+{
+  section span 
+  {
+    width: calc(20vw - 2px);
+    height: calc(20vw - 2px);
+  }
+}
+
+/* submit button ends */
+
+#prev-kt-yes{
+
+  right: 150px;
+  top: 30px;
+
+}
+#prev-kt-no{
+
+  right:40px;
+  top: 30px;
+}

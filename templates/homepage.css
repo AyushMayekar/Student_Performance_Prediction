@@ -386,7 +386,7 @@ video {
 .elem {
   height: 70%;
   width: 26%;
-  top: -1300px;
+  top: -1250px;
   overflow: hidden;
   border-radius: 20px;
   position: relative;
@@ -422,12 +422,14 @@ position: absolute;
   color: #0f0;
 left: 40px;
 font-size: 14px;
-top: 140px;
+top: 90px;
 position: absolute;
   transition: all ease 0.5s;
 }
 .elem:hover h2 {
   color: #fff;
+  height: 150%;
+  width: 150%;
   background-color: transparent;
 }
 /* .elem:hover img {

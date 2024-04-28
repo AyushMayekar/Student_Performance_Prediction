@@ -7,14 +7,18 @@ from dotenv import load_dotenv
 from flask import Flask, request, jsonify,render_template,redirect,url_for
 from flask_cors import CORS
 import numpy as np
+os.environ['MPLBACKEND'] = 'agg'
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
+from waitress import serve
+
 
 
 
 app = Flask(__name__)
 CORS(app)
 load_dotenv()
+
 # Configure Flask to serve static files from the 'static' directory
 app.static_url_path = '/static'
 app.static_folder = 'static'
@@ -56,6 +60,7 @@ def get_selected_subjects(user_id):
         print(f"Error retrieving selected subjects: {e}")
         return []
 
+# Function to retrieve Student Cgpa from Firebase
 def get_selected_Cgpa(user_id):
     try:
         user_ref = db.collection('users').document(user_id)
@@ -75,7 +80,7 @@ def get_selected_Cgpa(user_id):
         print(f"Error retrieving cgpa: {e}")
         return []
     
-
+# Function to predict the future cgpa
 def predict_future_cgpa(selected_cgpa_list):
     num_semesters = len(selected_cgpa_list)
     X = np.arange(1, num_semesters + 1).reshape(-1, 1)
@@ -89,7 +94,7 @@ def predict_future_cgpa(selected_cgpa_list):
     predicted_cgpa = np.minimum(predicted_cgpa, 10)
     return predicted_cgpa
 
-
+# Function to retrieve other info  of a student 
 def retrieve_other_info(user_id):
         try:
              user_ref = db.collection('users').document(user_id)
@@ -129,7 +134,9 @@ def receive_user_id():
                 study_time = int(piechart_data.get('studyHours', 0))
                 sleep_hours = int(piechart_data.get('sleepingHours', 0))
                 other_activities_hours = total_hours - (screen_time + study_time + sleep_hours)
-                piechart_data['Other Activities'] = other_activities_hours
+                if other_activities_hours<0:
+                    other_activities_hours=0
+                    piechart_data['Other Activities'] = other_activities_hours
                 kt_tips = generate_output(output)
                 comparison=generate_comparison(piechart_data)
                 create_piechart(user_id,piechart_data)
@@ -149,7 +156,7 @@ def receive_user_id():
 
 
 
-# Function to generate response using GenerativeAI model
+# Function to generate kt-tips using GenerativeAI model
 def generate_output(selected_subjects_list):
     try:
         model = genai.GenerativeModel("gemini-pro")
@@ -170,7 +177,7 @@ Prioritize clear and easy-to-understand explanations."""
         return error_message
     
 
-
+# function to generate schedule comparison
 def generate_comparison(piechart_data):
     try:
         model = genai.GenerativeModel("gemini-pro")
@@ -193,11 +200,12 @@ Compare the student's current daily schedule with the ideal daily schedule and p
         error_message = f"Error generating response: {e}"
         return error_message
 
-
+# function to generate schedule piechart
 def create_piechart(user_id,piechart_data):
     labels = list(piechart_data.keys())
     values = list(piechart_data.values())
     colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
+    plt.switch_backend('agg')
     plt.pie(values, labels=labels,colors=colors, autopct='%1.1f%%', startangle=140)
     plt.title('PIECHART OF YOUR DAILY SCHEDULE')
     plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle
@@ -206,7 +214,7 @@ def create_piechart(user_id,piechart_data):
     plt.clf()    
     return 'Piechart saved'
 
-
+# Function to handle cgpa request
 @app.route('/cgpa', methods=['POST'])
 def receive_user_id_cgpa():
     try:
@@ -221,11 +229,13 @@ def receive_user_id_cgpa():
                 study_time = int(piechart_data.get('studyHours', 0))
                 sleep_hours = int(piechart_data.get('sleepingHours', 0))
                 other_activities_hours = total_hours - (screen_time + study_time + sleep_hours)
-                piechart_data['Other Activities'] = other_activities_hours
+                if other_activities_hours<0:
+                    other_activities_hours=0
+                    piechart_data['Other Activities'] = other_activities_hours
                 cgpa = predict_future_cgpa(output)
                 if cgpa is not None:
                    tips=generate_tips(output,cgpa)
-                   create_piechart(user_id,piechart_data)
+                   create_nonKT_piechart(user_id,piechart_data)
                    Create_Graph(output,cgpa,user_id)
                    comparison=generate_comparison(piechart_data)
                    if user_id and tips and comparison:
@@ -242,10 +252,10 @@ def receive_user_id_cgpa():
             return 'User ID not provided', 400
     except Exception as e:
         print('Error:', e)
-        return 'Internal Server Error', 
+        return 'Internal Server Error', 500
 
 
-
+# Function to generate graaph trend tips
 def generate_tips(selected_cgpa_list,predicted_cgpa):
     try:
         model = genai.GenerativeModel("gemini-pro")
@@ -257,23 +267,25 @@ def generate_tips(selected_cgpa_list,predicted_cgpa):
         error_message = f"Error generating response: {e}"
         return error_message
     
-
-def create_piechart(user_id,piechart_data):
+# Function to create a schedule piechart
+def create_nonKT_piechart(user_id,piechart_data):
     labels = list(piechart_data.keys())
     values = list(piechart_data.values())
     colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
+    plt.switch_backend('agg')
     plt.pie(values, labels=labels,colors=colors, autopct='%1.1f%%', startangle=140)
     plt.title('PIECHART OF YOUR DAILY SCHEDULE')
     plt.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle
     piechart_filename=f"static/{user_id}_performance_piechart.png"
     plt.savefig(piechart_filename)
     plt.clf()    
-    return 'Piechart saved'
+    print('Piechart saved')
 
-
+# Function to create a prediction graph
 def Create_Graph(output,cgpa,user_id):
      num_semesters = len(output)
      future_semesters = np.arange(num_semesters + 1, min(num_semesters + 6, 9))
+     plt.switch_backend('agg')
      plt.figure(figsize=(8, 6))
      plt.plot(future_semesters, cgpa, linestyle='dashed', color='green')  # Line for predicted CGPAs
      plt.scatter(np.arange(1, num_semesters + 1), output, color='blue', label='Past CGPA')
@@ -289,9 +301,9 @@ def Create_Graph(output,cgpa,user_id):
      filename=f"static/{user_id}_performance_graph.png"
      plt.savefig(filename)
      plt.clf()
-     return "Image Saved Successfully!"
+     print("Image Saved Successfully!")
 
-
+# Function to generate schedule comparison
 def generate_comparison(piechart_data):
     try:
         model = genai.GenerativeModel("gemini-pro")
@@ -315,20 +327,24 @@ Compare the student's current daily schedule with the ideal daily schedule and p
         return error_message
 
        
-
+# function to handle output request and render the output page
 @app.route('/output/<string:user_id>')
 def display_output(user_id):
        return render_template("output.html", user_id=user_id)
 
-
+# funtion to handle kt-output request and render the kt-output page
 @app.route('/kt_output/<string:user_id>')
 def display_kt_output(user_id):
     return render_template("kt-output.html", user_id=user_id)
 
 
+def main():
+   host = os.getenv('HOST', '0.0.0.0')
+   port = int(os.getenv('PORT', '5000'))  # Convert port to integer
+   serve(app, host=host, port=port)
     
 
 # Start Flask app
 if __name__ == '__main__':
-    app.run(debug=True)
+    main()
     

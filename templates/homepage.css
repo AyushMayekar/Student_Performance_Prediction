@@ -54,7 +54,6 @@ body {
 #nav {
   height: 130px;
   width: 100%;
-  /* background-color: red; */
   display: flex;
   align-items: center;
   padding: 0 120px;
@@ -107,7 +106,6 @@ video {
   color: #000;
   top: -5px;
   left: -5px;
-  /* -webkit-text-stroke: 1.5px #0f0; */
   z-index: -1;
 }
 #page1 h2 {
@@ -185,7 +183,6 @@ video {
 
 
 #scroller {
-  /* background-color: red; */
   white-space: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
@@ -231,7 +228,6 @@ video {
 #about-us {
   height: 40vh;
   width: 100%;
-  /* background-color: red; */
   display: flex;
   padding: 0 50px;
   align-items: center;
@@ -260,7 +256,6 @@ video {
 }
 
 #cards-container {
-  /* background-color: red; */
   height: 60vh;
   display: flex;
   align-items: center;
@@ -273,7 +268,6 @@ video {
   height: 80%;
   width: 24%;
   top: 1250px;
-  /* background-color: blue; */
   border-radius: 200px;
   background-size: cover;
   background-position: center;
@@ -327,7 +321,6 @@ video {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* background-color: red; */
   background: linear-gradient(to left bottom, #119f3a, #ace022);
 }
 #green-div h4 {
@@ -432,9 +425,7 @@ position: absolute;
   width: 150%;
   background-color: transparent;
 }
-/* .elem:hover img {
-  scale: 1;
-} */
+
 #page4 h1 {
   font-size: 6.4vw;
   position: absolute;
@@ -471,7 +462,6 @@ position: absolute;
   width: fit-content;
   position: relative;
   z-index: 99;
-  /* background-color: red; */
 }
 #f2 h3 {
   font-size: 1.6vw;

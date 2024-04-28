@@ -105,7 +105,6 @@ section .signin .content .form .inputBox
 {
   position: relative;
   width: 100%;
-  /* margin-bottom: 25px; */
 }
 section .signin .content .form .inputBox input 
 {
@@ -185,7 +184,7 @@ input[type="submit"]:active
   }
 }
 
-/* second question start */
+
 
  section .signin1
 {
@@ -230,7 +229,6 @@ section .signin1 .content1 .form1 .inputBox1
 {
   position: relative;
   width: 100%;
-  /* margin-bottom: 25px; */
  }
 section .signin1 .content1 .form1 .inputBox1 input 
 {
@@ -296,9 +294,6 @@ input[type="submit"]:active
   }
 } 
 
-/* second question end */
-
-/* third question start */
 section .signin2
 {
   position: absolute;
@@ -342,7 +337,6 @@ section .signin2 .content2 .form2 .inputBox2
 {
   position: relative;
   width: 100%;
-  /* margin-bottom: 25px; */
  }
 section .signin2 .content2 .form2 .inputBox2 input 
 {
@@ -473,7 +467,6 @@ section .signin3 .content3 .form3 .inputBox3
 {
   position: relative;
   width: 100%;
-  /* margin-bottom: 25px; */
  }
 section .signin3 .content3 .form3 .inputBox3 input 
 {
@@ -585,7 +578,6 @@ section .signin4 .content4 .form4 .inputBox4
 {
   position: relative;
   width: 100%;
-  /* margin-bottom: 25px; */
 }
 section .signin4 .content4 .form4 .inputBox4 input 
 {
@@ -710,7 +702,6 @@ section .signin5 .content5 .form5 .inputBox5
 {
   position: relative;
   width: 100%;
-  /* margin-bottom: 25px; */
 }
 section .signin5 .content5 .form5 .inputBox5 input 
 {
@@ -794,7 +785,6 @@ input[type="submit"]:active
 /* Example CSS for styling the slider */
 input[type="range"] {
   width: 100%; /* Adjust width as needed */
-  /* -webkit-appearance: none; Remove default styling */
 }
 
 input[type="range"]::-webkit-slider-thumb {

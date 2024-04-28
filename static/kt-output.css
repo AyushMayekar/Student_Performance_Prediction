@@ -27,7 +27,6 @@ h1 {
 }
 
 .Performance_Chart,.ideal-piechart{
-    /* float: left; Float the graph section to the left */
     width: 90%; /* Adjust width as needed */
   }
 

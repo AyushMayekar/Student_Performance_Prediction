@@ -20,14 +20,12 @@
 <div class="content1">
 <div class="Performance_Chart">
   {% if user_id %}
-<!-- Assuming your image file is named User_id_performance_graph.png -->
 <img src="{{ url_for('static', filename=user_id + '_performance_piechart.png') }}" alt="Performance Pie Chart" class="Performance_Chart">
 {% else %}
 <p>No Piecharts available.</p>
 {% endif %}
 </div>
 <div class="ideal-piechart">
-  <!-- Assuming your image file is named ideal_performance_piechart.png -->
   <img src="{{ url_for('static', filename='Ideal_performance_piechart.png') }}" alt="Ideal Performance Pie Chart" class="Performance_Chart">
 </div>
 </div>
@@ -44,10 +42,7 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
   import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
-  // https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
     apiKey: "AIzaSyCpFl0lAVKcKrg5gCzlz2RuQ3zt7xCY_dc",
     authDomain: "student-performance-pred-f6c38.firebaseapp.com",

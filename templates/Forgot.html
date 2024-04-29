@@ -7,7 +7,7 @@
 
   <meta charset="UTF-8"> 
 
-  <title>Log in</title> 
+  <title>Forgot Password</title> 
 
   <link rel="stylesheet" href="login.css"> 
 
@@ -21,35 +21,24 @@
 
     <div class="content"> 
 
-     <h2>Log in</h2> 
+     <h2>Reset Password</h2> 
 
      <div class="form"> 
-
-      <div class="inputBox"> 
-
-       <input type="text"  id ="username" required> <i>Username</i> 
-
-      </div> 
       
       <div class="inputBox"> 
 
-        <input type="text" id="email" required> <i>Email</i> 
+        <input type="text" id="email" required> <i>Registered  Email ID</i> 
  
        </div> 
 
-      <div class="inputBox"> 
 
-       <input type="password" id="password" required> <i>Password</i> 
-
-      </div> 
-
-      <div class="links"> <a href="Forgot.html">Forgot Password ?</a> <a href="signup.html">Signup</a> 
+      <div class="links"> <a href="#"> <a href="login.html">Login</a> 
 
       </div> 
 
       <div class="inputBox"> 
 
-       <input type="submit" id="loginButton" value="Login"> 
+       <input type="submit" id="send" value="Send Reset Link"> 
 
       </div> 
 
@@ -64,8 +53,7 @@
   <script type="module">
     // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+    import { getAuth, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
     const firebaseConfig = {
       apiKey: "AIzaSyCpFl0lAVKcKrg5gCzlz2RuQ3zt7xCY_dc",
       authDomain: "student-performance-pred-f6c38.firebaseapp.com",
@@ -78,25 +66,30 @@
   
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
     const auth = getAuth();
 
-    const loginButton = document.getElementById('loginButton');
-    loginButton.addEventListener('click', async function(event) {
-        event.preventDefault(); // Prevent the default form submission
-
+    function send_reset_password(){
         const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+    sendPasswordResetEmail(auth, email)
+  .then(() => {
+    // Password reset email sent!
+    console.log("Successfully sent password reset email to: ", email);
+    alert(`A link to reset your password has been sent to ${email}. Please check your inbox.`);
 
-        try {
-                await signInWithEmailAndPassword(auth, email, password);
-                console.log('User logged in successfully');
-                window.location.href = "dashboard.html"; // Redirect to the dashboard after successful login
-            } catch (error) {
-                console.error('Login error:', error.message);
-                alert('Error: ' + error.message);
-            }
-        });
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    alert('An error occurred while sending the password reset email. Please try again later.');
+  });
+}
+
+
+const Reset_Button = document.getElementById('send');
+    Reset_Button.addEventListener('click', async function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        send_reset_password();
+});
         
   </script>
 

@@ -149,12 +149,12 @@
   }
   .signin .content .form .links a 
   {
-    color: #fff;
+    color: #0f0;
     text-decoration: none;
   }
   .signin .content .form .links a:nth-child(2)
   {
-    color: #0f0;
+    color: rgb(255, 21, 0);
     font-weight: 600;
   }
   .signin .content .form .inputBox input[type="submit"]

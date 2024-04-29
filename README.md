@@ -61,12 +61,14 @@ To use the Student Performance Prediction System, follow these steps:
 
 ### Working
 
-Check out this YouTube video[![Watch the video](C:\Users\ayush\OneDrive\Desktop\Student Performance Prediction\static\Youtube Thumbnail.png)](video link) for a working of the Student Performance Prediction System in action!
+Check out this YouTube video for a working of the Student Performance Prediction System in action
+
+[![Watch the video](https://img.youtube.com/vi/HMUlhZm2rI8/maxresdefault.jpg)](https://youtu.be/HMUlhZm2rI8) 
 
 ### Screenshots
 
-![1.](C:\Users\ayush\OneDrive\Desktop\Student Performance Prediction\static\Screenshot 2024-04-24 105439.png)
-![2.](C:\Users\ayush\OneDrive\Desktop\Student Performance Prediction\static\Screenshot 2024-04-24 105452.png)
+![1.](https://github.com/AyushMayekar/Student_Performance_Prediction/blob/main/static/Screenshot%202024-04-24%20105439.png)
+![2.](https://github.com/AyushMayekar/Student_Performance_Prediction/blob/main/static/Screenshot%202024-04-24%20105452.png)
 
 
 ### Contact
